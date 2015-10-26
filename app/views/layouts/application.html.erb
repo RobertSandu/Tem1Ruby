@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog - tema 1 - laboratorRubyOnRails</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container-fluid">
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Blog tema 1</a>
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      		<ul class="nav navbar-nav">
+      			<li><a href="/posts">Posts</a></li>
+      			<li><%= link_to 'New Post', new_post_path %></li>
+      		</ul>
+	</div>
+
+</nav>
+
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<%= yield %>
+		<div class="col-md-3">
+			<ul class="list-group" id="posturiAjax">
+			</ul>
+			<script type="text/javascript">
+				$(document).ready(function(){
+
+					$.ajax({url:"posts.json"}).done(function(data){
+
+						$.each(data,function(index,value){
+							console.log(value);
+							var li = $('<li></li>').addClass('list-group-item');
+							var link = $('<a />',{href : (value["url"]).replace(".json",""), text : value["title"]}); 
+							li.append(link);
+							$('#posturiAjax').append(li);
+
+						});
+
+					});
+
+				});
+			</script>
+
+
+		</div>
+	</div>
+	
+
+
+</body>
+</html>
